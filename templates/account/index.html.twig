@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container mt-5">
+        <h1 class="h3 mb-3 font-weight-normal">Bienvenue, {{ app.user.email }} !</h1>
+        <p class="lead">Votre solde actuel : <strong>{{ balance }} €</strong></p>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <form action="{{ path('add_funds') }}" method="POST" class="form-inline">
+                    <div class="input-group mb-3">
+                        <input type="number" name="amount" class="form-control" placeholder="Montant à ajouter" required>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">Ajouter des fonds</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <form action="{{ path('withdraw_funds') }}" method="POST" class="form-inline">
+                    <div class="input-group mb-3">
+                        <input type="number" name="amount" class="form-control" placeholder="Montant à retirer" required>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-danger">Retirer des fonds</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <a href="{{ path('app_logout') }}" class="btn btn-secondary">Déconnexion</a>
+            </div>
+        </div>
+
+        <!-- Flash messages -->
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success mt-3">{{ message }}</div>
+        {% endfor %}
+
+        {% for message in app.flashes('error') %}
+            <div class="alert alert-danger mt-3">{{ message }}</div>
+        {% endfor %}
+    </div>
+
+    <div class="position-fixed" style="bottom: 20px; right: 20px;">
+        <form action="{{ path('delete_account') }}" method="POST">
+            <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer votre compte ? Cette action est irréversible.')">
+                Supprimer mon compte
+            </button>
+        </form>
+    </div>
+{% endblock %}
