@@ -11,3 +11,7 @@ app_login:
 app_login_check:
     path: /login_check
     controller: App\Controller\SecurityController::loginCheck
+
+homepage:
+    path: /
+    controller: App\Controller\HomeController::index
